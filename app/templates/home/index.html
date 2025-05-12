@@ -5,11 +5,38 @@
 {% endblock %}
 
 {% block content%}
-  <div class="content-index">
-    {% if g.user %}
-      <h1>Vous êtes connectés</h1>
-    {% else %}
-      <h1>Bienvenue sur le template de base de votre TM :)</h1>
-    {% endif %}
+  <div class="title">
+    
+      <h1>Bienvenue</h1>
+
+
+    
   </div>
+  <div class="home-blog">
+
+    {% for post in posts %}
+    <div class="fond-blog"> 
+    
+      <div class="blog">
+      
+       <img id="image_blog" src="{{ url_for('static', filename='uploads/' ~ post['image']) }}" alt="Blog Image">
+
+       <div class="blog-titre">
+         <h2>{{ post['titre'] }}</h2>
+        
+       </div>
+      </div>
+      <div class="blog-texte">
+        <p>{{ post['texte'] }}</p>
+      </div>
+    </div>
+    
+    {% endfor %}
+
+
+
+
+  </div>
+
+
 {% endblock %}

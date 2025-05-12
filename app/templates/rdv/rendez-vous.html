@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Profil
+{% endblock %}
+
+{% block content%}
+  
+
+{% if g.user %}
+  <div class="rdv-connexion">
+    
+
+      
+
+
+ <h2>Choisissez une date</h2>
+  <input id="calendar" type="text" placeholder="Sélectionner une date">
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+        
+      flatpickr("#calendar", {
+          altInput: true,
+          altFormat: "F j, Y",
+          dateFormat: "Y-m-d",
+          onChange: function(selectedDates, dateStr, instance) {
+                
+              window.location.href = `/rdv/horaire?date=${dateStr}`;
+          }
+      });
+  </script>
+
+
+    
+
+  </div>
+    
+{% else %}
+  <div class="rdv-non-connexion">
+    <p> Pour prendre rendez-vous veuillez vous connecter <a href="{{ url_for('auth.login') }}">ici</a></p>
+                   
+  </div>
+
+{% endif %}
+{% endblock %}

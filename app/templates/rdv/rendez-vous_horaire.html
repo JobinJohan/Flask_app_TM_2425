@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Profil
+{% endblock %}
+
+{% block content%}
+<div class="horaires">
+    <h2 id="title-horaire">Horaires du {{ date }}</h2>
+        <div>
+            {% for time, status in time_slots.items() %}
+                <div class="plage-horaire {% if status == 'Occupé' %}occupied{% endif %}">
+                    {{ time }} - 
+                    {% if status == 'Disponible' %}
+                        <a href="/rdv/réserver?date={{ date }}&time={{ time }}">Réserver</a>
+                    {% else %}
+                       Occupé
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}

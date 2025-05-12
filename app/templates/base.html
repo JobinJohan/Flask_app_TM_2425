@@ -2,46 +2,63 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
 <body>
     <header id="header">
         <nav id="header-nav">
-            <div id="header-nav-logo">
-                <a href="{{url_for('home.landing_page')}}">
-                    <img src="{{url_for('static', filename='imgs/logo-csud.svg')}}" alt="logo-csud"/>
-                </a>
-            </div>
+            
             <ul id="header-nav-menu">
                 {% if g.user %}
-                    <li><span>{{ g.user['username'] }}</span>
-                    <li><a href="{{ url_for('auth.logout') }}">Se déconnecter</a>
-                    <li><a href="{{url_for('user.show_profile')}}">Consulter son profil</a></li>
+                    <li><a href="{{ url_for('home.landing_page') }}">Accueil</a></li>
+                    <li><a href="{{ url_for('informations.info') }}">Infos</a></li>
+                    <li id="rendezvous"><a  href="{{ url_for('rdv.prendre_rendez_vous') }}">Prendre rendez-vous</a></li>
+                    <li><a id="header-logo" href="{{url_for('user.show_profile')}}">
+                        <img id="header-logo" src="{{url_for('static', filename='imgs/header-avatar.png')}}" alt="profile-photo"></a></li>
+                    
                 {% else %}
-                    <li><a href="{{ url_for('auth.register') }}">S'enregistrer</a>
-                    <li><a href="{{ url_for('auth.login') }}">Se connecter</a>
+                    <li><a href="{{ url_for('home.landing_page') }}">Accueil</a></li>
+                    <li><a href="{{ url_for('informations.info') }}">Infos</a></li>
+                    <li id="rendezvous"><a href="{{ url_for('rdv.prendre_rendez_vous') }}">Prendre rendez-vous</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Connexion</a></li>
+                
                 {% endif %}
+
             </ul>
+        {% if session['id_personne'] == 4 %}
+            <a id="header-blog" href="{{ url_for('blogs.blogs') }}">Modifier un blog</a>
+                    
+        {% endif %}
+            
         </nav>
+
+        
+
     </header>
         
     <main id="main-content">
-        {% block content %}{% endblock %}
+        {% block content %}
+       
+        
+        {% endblock %}
     </main>
 
     <footer id="footer">
         <div id="footer-nav">
-            <div>
-                <p>Template de base TM</p>
-            </div>
-            <div>
-                <p>Collège du Sud, 1630, Bulle </p>
-            </div>
-            <div>
-                <p>Johan Jobin</p>
+           
+            
+            <div id="footer-nav-logo">
+                <a href="https://www.facebook.com/">
+                    <img src="{{url_for('static', filename='imgs/Facebook-logo.png')}}" alt="Facebook-logo">
+                </a>
+                <a href="https://www.instagram.com/">
+                    <img src="{{url_for('static', filename='imgs/instagram-logo.png')}}" alt="instagram logo">
+                </a>
             </div>
         </div>
     </footer>
 
-    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
+    
 </body>

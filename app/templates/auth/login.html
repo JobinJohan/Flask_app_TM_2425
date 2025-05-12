@@ -5,15 +5,29 @@
 {% endblock %}
 
 {% block content %}
-  <div class="content-register">
+  <div class="content-login">
     <div>
+      <h1 id="login_title"> Connexion</h1>
       <form method="post">
-        <label for="username">Nom d'utilisateur</label>
-        <input name="username" id="username" required>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Se connecter">
-      </form>
+        <label for="email">E-mail<br /></label>
+        <input type="email" name="email" id="email" required><br />
+
+        <label  for="password">Mot de passe<br /></label>
+        <input type="password" name="password" id="password" required><br />
+
+        <div class="connexion-center">
+
+          <input id="connexion-button" type="submit" value="Connexion">
+
+          <div class="connexion-bas-de-page">
+
+            <p id="connexion-text" style="display: inline;">pas de compte?</p>
+            <a id="connexion-text" href="{{ url_for('auth.register') }}" style="display: inline;">s'inscrire</a>
+
+
+          </div>
+        </div>
+    </form>
 
       {% for message in get_flashed_messages() %}
         <div>{{ message }}</div>

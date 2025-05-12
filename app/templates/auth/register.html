@@ -8,11 +8,29 @@
   <div class="content-register">
     <div>
       <form method="post">
-        <label for="username">Nom d'utilisateur</label>
-        <input name="username" id="username" required>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="S'enregistrer">
+        <label for="nom">Nom<br /></label>
+        <input name="nom" id="nom" required><br />
+
+        <label for="prenom">Prénom<br /></label>
+        <input name="prenom" id="prenom" required><br />
+
+        <label for="telephone">Téléphone<br /></label>
+        <input name="telephone" id="telephone" required><br />
+
+        <label for="adresse">Adresse<br /></label>
+        <input name="adresse" id="adresse" required><br />
+
+        <label for="email">E-mail<br /></label>
+        <input type="email"  name="email" id="email" required><br />
+
+        <label for="password">Mot de passe<br /></label>
+        <input type="password" name="password" id="password" required><br />
+        
+        <div class="connexion-center">
+          <input id="connexion-button" type="submit" value="Créer">
+        </div>
+        
+        </form>
       </form>
     
       {% for message in get_flashed_messages() %}
