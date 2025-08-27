@@ -15,11 +15,8 @@
         <div class="user-info">
           <div class="column end">
             <h3 class="end">
-              <span>{{ g.user['username'] }}</span>
+              <span>{{ user['username'] }}</span>
             </h3>
-            <ul>
-              <a href="{{ url_for('user.edit_profile')}}" class="small_link">changer mon profil</a>
-            </ul>
           </div>
           <div class="pp_container1">
             {% if user.profile_pic is none or user.profile_pic == '' %}
@@ -30,12 +27,11 @@
           </div>
         </div> 
       </div>
-      
       {%if galleries%}
         {%for gallery in galleries%}
         <div class="profile_proj">
           <div class="column">
-          {%if loop.first%}
+            {%if loop.first%}
             <h3>
               {%if user['mini_desc'] | trim == '' or user['mini_desc'] is none %}
               <p class="wide" >Bonjour, je suis {{ user['username'] }}!</p>
@@ -44,9 +40,9 @@
               {%endif%}
               <p>Les projets</p>
             </h3>
-          {%else%}
+            {%else%}
             <div style="margin-top: 50px;"></div>
-          {%endif%}
+            {%endif%}
             {%if loop.first%}
               <div style="margin-left: auto; margin-right: auto; max-width: 1000px;">
             {%else%}
@@ -98,8 +94,8 @@
               {%endif%}
             </h5> 
           </div>
-        {%else%}
-        {%endif%}
+          {%else%}
+          {%endif%}
         </div>
         {%endfor%}
       {%else%}
@@ -143,3 +139,5 @@
     </ul>
   </div>
 {% endblock %}
+
+  

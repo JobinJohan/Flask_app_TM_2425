@@ -5,19 +5,22 @@
 {% endblock %}
 
 {% block content %}
+<h1>Connectez-vous</h1>
   <div class="content-register">
-    <div>
+    
+    <div class="block">
+      <div class="column" >
       <form method="post">
-        <label for="username">Nom d'utilisateur</label>
-        <input name="username" id="username" required>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Se connecter">
+        <div style="margin-bottom: 20px;"><input type="text" placeholder="Nom d'utilisateur" name="username" id="username" required class="connection-textbox"></div>
+        <div style="margin-bottom: 20px;"><input type="password" placeholder="Mot de passe" name="password" id="password"  required class="connection-textbox"></div>
+        <a href="{{ url_for('auth.reset')}}" class="small_link">Mot de passe oublié?</a>
+        <div><input type="submit" value="Poursuivre" style="padding-right: 210px; padding-left: 210px;"></div>
       </form>
+      </div>
 
       {% for message in get_flashed_messages() %}
         <div>{{ message }}</div>
       {% endfor %}
     </div>
-  </div>
+  </div>                                   
 {% endblock %}

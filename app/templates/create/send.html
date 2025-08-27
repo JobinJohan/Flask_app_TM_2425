@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Envoyer l'email
+{% endblock %}
+
+{% block content %}
+<div class="block" style=" width: 40%;">
+    <form method="POST">
+        <h5 class="center" style="font-size: 200%; font-weight: 400; padding-left: 10%a;"> Envoyer à :</h5>
+        {% for i in range(no_participants-1) %}
+        <input list="users{{ i }}" name="users" id="userInput{{ i }}" placeholder="noms d'utilisateurs" class="box-black center" style="width: 100%;" required>
+        <div>
+            <datalist id="users{{ i }}">
+                {% for user in all_users %}
+                    <option value="{{ user.username }}"></option>
+                {% endfor %}
+            </datalist>
+        </div>
+        {% endfor %}
+        <div class="lineblk" style="margin-left: 20%; margin-right: 20%;"></div>
+        <h5 class="center">{{ gallery['name'] }}</h5>
+        <div class="row">
+            <div class="box-black-huge column" style="width: 50%; justify-content: start;">
+                <h5 style="text-decoration: underline;">Description</h5>
+                <h5>{{ gallery['description'] }}</h5>
+            </div>
+            <div class="column">
+                <h5>Format : {{gallery['format']}}</h5>
+                <h5>Participants : {{gallery['no_participants']}}</h5>
+                <h5>Délai : {{ gallery['deadline'] }}</h5>
+                <h5>Couleur de l'arrière-plan : {{gallery['color']}}</h5>
+            </div>
+        </div>
+        <button type="submit" class="center button">
+            Confirmer et envoyer
+        </button>
+        <a href="{{ url_for('create.createproject')}}" style="text-decoration: none;"><h5 class="center" style="opacity: .5;">retour</h5></a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Artistes
+{% endblock %}
+
+{% block content %}
+  <h2>Artistes</h2>
+  <div class="column" style="margin-bottom: 50px;">
+    {%if users%}
+      {%for user in users%}
+        {% if loop.index % 3 == 1 %}
+        <div class="row around" style="margin-top: 50px;">
+        {%endif%}
+          <div class="column artist-work">
+            <div class="row start ">
+              <div class="artist_pfp pp_container">
+                <a href="{{ url_for('artists.user_profile', username=user.username) }}">
+                  {% if user.profile_pic is none or user.profile_pic == '' %}
+                  <img src="/static/imgs/profile-pic.webp" alt="default profile pic">
+                  {% else %}
+                  <img src="{{ url_for('static', filename=user.profile_pic) }}" alt="Profile Picture">
+                  {% endif %}
+                </a>
+              </div>
+              <p style="margin-top: auto;">{{user['username']}}</p>
+            </div>
+            <a href="{{ url_for('artists.user_profile', username=user.username) }}" style="text-decoration: none; color: #ff1058f5;">
+            <div class="click_user">
+              {%if loop.first%}
+              <h2 style="opacity: .5;">Cliquez pour inspecter le profil de l'utilisateur.</h3>
+              {%else%}
+              {%endif%}
+            </div>
+            </a>
+          </div>
+        {% if loop.index % 3 == 0 or loop.last %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+{% endblock %}

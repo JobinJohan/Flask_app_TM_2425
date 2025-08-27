@@ -2,46 +2,53 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <header id="header">
-        <nav id="header-nav">
-            <div id="header-nav-logo">
+        <nav class="nav" id="header-nav">
+            <div id="header-nav-img">
                 <a href="{{url_for('home.landing_page')}}">
-                    <img src="{{url_for('static', filename='imgs/logo-csud.svg')}}" alt="logo-csud"/>
+                    <img src="{{url_for('static', filename='imgs/logo.png')}}" alt="logo-unitearts"/>
                 </a>
             </div>
             <ul id="header-nav-menu">
-                {% if g.user %}
-                    <li><span>{{ g.user['username'] }}</span>
-                    <li><a href="{{ url_for('auth.logout') }}">Se déconnecter</a>
-                    <li><a href="{{url_for('user.show_profile')}}">Consulter son profil</a></li>
+                    <li><a href="{{ url_for('artists.people') }}">artistes</a></li>
+                    <li><a href="{{ url_for('galleries.artworks') }}">oeuvres</a></li>
+                {% if g.user %}                
+                    <li><a href="{{ url_for('create.createproject') }}">créer projet</a></li>
+                    <li><a href="{{ url_for('projects.projects') }}">mes projets</a></li>   
                 {% else %}
-                    <li><a href="{{ url_for('auth.register') }}">S'enregistrer</a>
-                    <li><a href="{{ url_for('auth.login') }}">Se connecter</a>
+                    <li><a href="{{ url_for('auth.login') }}">créer projet</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">s'enregistrer</a>
+                    <li><a href="{{ url_for('auth.login') }}">se connecter</a>
                 {% endif %}
             </ul>
+            {%if g.user %}
+            <div class="pp_container1" style="width: 60px; height: 60px; margin-top: 20px;">
+                {%if g.user['profile_pic'] is none%}
+                    <a href="{{url_for('user.show_profile')}}">
+                        <img class="profile-pic" src="/static/imgs/profile-pic.webp" alt="default profile pic">
+                    </a>
+                {% else %}
+                    <a href="{{url_for('user.show_profile')}}">
+                        <img class="profile-pic" src="{{ url_for('static', filename=g.user.profile_pic) }}" alt="Profile Picture">
+                    </a>
+                {% endif %}
+            </div>
+            {%else%}
+            <div style="width: 60px; height: 60px; margin-top: 20px;"></div>
+            {%endif%}
         </nav>
+            <hr class="line">
     </header>
         
-    <main id="main-content">
+    <main id="main-content" class="content-margin">
         {% block content %}{% endblock %}
     </main>
 
-    <footer id="footer">
-        <div id="footer-nav">
-            <div>
-                <p>Template de base TM</p>
-            </div>
-            <div>
-                <p>Collège du Sud, 1630, Bulle </p>
-            </div>
-            <div>
-                <p>Johan Jobin</p>
-            </div>
-        </div>
-    </footer>
-
-    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>

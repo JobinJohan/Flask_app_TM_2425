@@ -1,15 +1,33 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Template de base
+  Homepage
 {% endblock %}
 
 {% block content%}
   <div class="content-index">
     {% if g.user %}
-      <h1>Vous êtes connectés</h1>
+      <h1>Bienvenue, "<span>{{ g.user['username'] }}</span>"</h1>
+      <div id="Blogo">
+        <img src="{{url_for('static', filename='imgs/logo_big.png')}}" alt="logo_homepg"></img>
+      </div>
     {% else %}
-      <h1>Bienvenue sur le template de base de votre TM :)</h1>
+      <div id="Blogo" >
+        <img src="{{url_for('static', filename='imgs/logo_big.png')}}" alt="logo_homepg"></img>
+      </div>
     {% endif %}
   </div>
+  <div class="center" style="width: 200px; justify-content: center; margin: auto;">
+    {% if g.user is none %}
+    <a href="{{ url_for('auth.login') }}">
+      <input type="button" value="Créer un projet" class="create-button">
+    </a>
+    {% else %}
+    <a href="{{ url_for('create.createproject') }}">
+      <input type="button" value="Créer un projet" class="create-button">
+    </a>
+    {% endif %}
+  </div>
+  <div class="hmpg">
+  </div>  
 {% endblock %}

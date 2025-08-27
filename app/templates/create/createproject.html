@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Créer un projet
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div id="squaregray">
+      
+<div id="shapeX"></div>
+
+    </div>
+    <div style="margin-right: 20px;">
+      <p><h2 class="a">Créer un projet</h2>
+      <div id="rectangleC" style="padding-top: 20px;">
+        <form method="POST">
+        <input type="text" placeholder="Nom du projet" name="name" id="name" maxlength="25" class="box-black" required>
+        <div class="lineblk"></div>
+        <h5>Description du projet</h5>
+        <input type="text" placeholder="Thème, style" name="description" id="description" class="box-black" required>
+        <div class="lineblk"></div>
+          <div class="row">
+            <h5 style="width: 200px;">Nombre de participants :</h5>
+            <div>
+              <input type="number" name="no_participants" id="no_participants" min=1 max=5 class="box-black-big" style="margin-top: 20px; margin-right: auto;" required>
+            </div>
+          </div>
+        <div class="lineblk"></div>
+        <h5 style="width: 190px;">Délai pour envoyer le projet :</h5>
+        <input type="date" name="deadline" id="deadline" class="box-black" required>
+        <div class="lineblk"></div>
+        <h5>Format :</h5>
+        <select id="aspectRatio" name="format" required>
+          <option value="" disabled selected>Libre, 1:1, 2:3, ...</option>
+          <option value="libre">libre</option>
+          <option value="1:1">1:1</option>
+          <option value="2:3">2:3</option>
+          <option value="3:4">3:4</option>
+          <option value="4:5">4:5</option>
+          <option value="9:16">9:16</option>
+        </select>
+
+        <div class="lineblk"></div>
+        <div class="row">     
+          <div class="column">
+            <h5>couleur de l'arrière-plan :</h5>
+            <input type="text" name="color" id="color" placeholder="#000000" class="box-black" value="#FFFFFF" maxlength="7" oninput="updateColorPicker()">
+          </div>
+          <input type="color" id="colorPicker" onchange="updateHexCode()" value="#FFFFFF">  
+        </div> 
+        <div class="center"><input type="submit" value="Confirmer" class="button"></div>
+        </form>
+        {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const aspectRatioSelect = document.getElementById('aspectRatio');
+    const shapeX = document.getElementById('shapeX');
+
+    function updateContent() {
+      const selectedValue = aspectRatioSelect.value;
+
+      if (selectedValue !== "libre") {
+        shapeX.innerHTML = "";
+      }
+
+      if (selectedValue === "libre") {
+        shapeX.innerHTML = `
+        <h2 style="padding-top: 500px; margin: auto; ">Format libre</h2>
+        `;
+      }
+      
+      if (selectedValue === "1:1") {
+        shapeX.innerHTML = ` 
+        <div id="shapeY" style="width: 800px; height: 800px;"></div>
+        `;
+      }
+      if (selectedValue === "2:3") {
+        shapeX.innerHTML = ` 
+        <div id="shapeY" style="width: 600px; height: 900px;"></div>
+        `;
+      }
+      if (selectedValue === "3:4") {
+        shapeX.innerHTML = ` 
+        <div id="shapeY" style="width: 600px; height: 800px;"></div>
+        `;
+      }
+      if (selectedValue === "4:5") {
+        shapeX.innerHTML = ` 
+        <div id="shapeY" style="width: 640px; height: 800px;"></div>
+        `;
+      }
+      if (selectedValue === "9:16") {
+        shapeX.innerHTML = ` 
+        <div id="shapeY" style="width: 450px; height: 800px;"></div>
+        `;
+      }
+    } 
+    updateContent();
+    
+    aspectRatioSelect.addEventListener('change', updateContent);
+  });
+  function updateHexCode() {
+        const colorPicker = document.getElementById("colorPicker");
+        const hexCodeInput = document.getElementById("color");
+        const shapeX = document.getElementById("shapeY)");
+        hexCodeInput.value = colorPicker.value;
+
+        const selectedColor = colorPicker.value;
+        hexCodeInput.value = selectedColor;
+        shapeY.style.backgroundColor = selectedColor;
+    }
+
+    function updateColorPicker() {
+      const colorPicker = document.getElementById("colorPicker");
+      const hexCodeInput = document.getElementById("color");  
+      const shapeX = document.getElementById("shapeY)");
+      const hexValue = hexCodeInput.value;
+
+      if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
+        colorPicker.value = hexValue;
+        shapeX.style.backgroundColor = hexValue;  
+      }
+    }
+</script>
+
+{% endblock %}

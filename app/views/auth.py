@@ -16,20 +16,23 @@ def register():
         # On récupère les champs 'username' et 'password' de la requête HTTP
         username = request.form['username']
         password = request.form['password']
-
+        email = request.form['email']
+        name = request.form['name']
+        last_name = request.form['last_name']
         # On récupère la base de donnée
         db = get_db()
 
         # Si le nom d'utilisateur et le mot de passe ont bien une valeur
         # on essaie d'insérer l'utilisateur dans la base de données
-        if username and password:
+        if username and password and email:
             try:
-                db.execute("INSERT INTO users (username, password) VALUES (?, ?)",(username, generate_password_hash(password)))
+                db.execute("INSERT INTO users (username, password, email, name, last_name) VALUES (?, ?, ?, ?, ?)",(username, generate_password_hash(password), email, name, last_name))
                 # db.commit() permet de valider une modification de la base de données
                 db.commit()
                 # On ferme la connexion à la base de données pour éviter les fuites de mémoire
                 close_db()
                 
+
             except db.IntegrityError:
 
                 # La fonction flash dans Flask est utilisée pour stocker un message dans la session de l'utilisateur
@@ -80,7 +83,7 @@ def login():
         # De cette manière, à chaque requête de l'utilisateur, on pourra récupérer l'id dans le cookie session
         if error is None:
             session.clear()
-            session['user_id'] = user['id']
+            session['id_user'] = user['id_user']
             # On redirige l'utilisateur vers la page principale une fois qu'il s'est connecté
             return redirect("/")
         
@@ -100,6 +103,14 @@ def logout():
     # On redirige l'utilisateur vers la page principale une fois qu'il s'est déconnecté
     return redirect("/")
 
+@auth_bp.route('/reset')
+def reset():
+    return render_template('auth/reset.html')
+
+
+@auth_bp.route('/password_reset')
+def password_reset():
+    return render_template('auth/password_reset.html')
 
 # Fonction automatiquement appelée à chaque requête (avant d'entrer dans la route) sur une route appartenant au blueprint 'auth_bp'
 # La fonction permet d'ajouter un attribut 'user' représentant l'utilisateur connecté dans l'objet 'g' 
@@ -107,11 +118,11 @@ def logout():
 def load_logged_in_user():
 
     # On récupère l'id de l'utilisateur stocké dans le cookie session
-    user_id = session.get('user_id')
+    id_user = session.get('id_user')
 
     # Si l'id de l'utilisateur dans le cookie session est nul, cela signifie que l'utilisateur n'est pas connecté
     # On met donc l'attribut 'user' de l'objet 'g' à None
-    if user_id is None:
+    if id_user is None:
         g.user = None
 
     # Si l'id de l'utilisateur dans le cookie session n'est pas nul, on récupère l'utilisateur correspondant et on stocke
@@ -119,7 +130,7 @@ def load_logged_in_user():
     else:
          # On récupère la base de données et on récupère l'utilisateur correspondant à l'id stocké dans le cookie session
         db = get_db()
-        g.user = db.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
+        g.user = db.execute('SELECT * FROM users WHERE id_user = ?', (id_user,)).fetchone()
         # On ferme la connexion à la base de données pour éviter les fuites de mémoire
         close_db()
 
